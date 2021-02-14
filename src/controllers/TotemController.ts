@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 
 import Totem from '../models/Totem';
 
 export default {
     async index(request: Request, response: Response) {
-        const totemsRepository = getRepository(Totem);
+        const totemsRepository = Totem;
 
         const totems = await totemsRepository.find();
 
@@ -15,9 +14,9 @@ export default {
     async show(request: Request, response: Response) {
         const { id } = request.params;
 
-        const totemsRepository = getRepository(Totem);
+        const totemsRepository = Totem;
 
-        const totem = await totemsRepository.findOneOrFail(id);
+        const totem = await totemsRepository.findById(id);
 
         return response.json(totem);
     },
@@ -29,14 +28,12 @@ export default {
             longitude,
         } = request.body;
 
-        const totemsRepository = getRepository(Totem);
-
-        const totem = totemsRepository.create({
+        const totem = new Totem({
             latitude,
             longitude,
         });
 
-        await totemsRepository.save(totem);
+        await Totem.prototype.save(totem);
 
         return response.status(201).json(totem);
     }

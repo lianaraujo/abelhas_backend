@@ -1,21 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import Role from './Role';
+import * as mongoose from "mongoose";
 
-@Entity('users')
-export default class User {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+const user = new mongoose.Schema({
+    id: Number,
+    email: String,
+    _password: String,
+})
 
-  @Column()
-  email: string;
+const User = mongoose.model('User', user);
 
-  @Column({ name: 'password' })
-  _password: string;
-
-  // @Column()
-  // role_id: number;
-
-  @ManyToOne(() => Role, { eager: true })
-  @JoinColumn({ name: 'role_id' })
-  role: Role;
-}
+export default User;

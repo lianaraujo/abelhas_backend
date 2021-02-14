@@ -1,10 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import * as mongoose from "mongoose";
 
-@Entity('roles')
-export default class Role {
-  @PrimaryGeneratedColumn('increment')
-  id: number;
+const role = new mongoose.Schema({
+    id: Number,
+    name: String,
 
-  @Column()
-  name: string;
-}
+})
+const Role = mongoose.model('Role', role);
+
+export default Role;

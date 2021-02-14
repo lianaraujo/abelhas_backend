@@ -1,14 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import * as mongoose from "mongoose";
 
-@Entity('totems')
-export default class Totem {
+const totem = new mongoose.Schema({
+    id: Number,
+    latitude: Number,
+    longitude: Number,
+})
+const Totem = mongoose.model('Totem', totem);
 
-    @PrimaryGeneratedColumn('increment')
-    id: number;
-
-    @Column()
-    latitude: number;
-
-    @Column()
-    longitude: number;
-}
+export default Totem;

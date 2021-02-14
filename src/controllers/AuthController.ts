@@ -1,5 +1,4 @@
 import { json, NextFunction, Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 import { compare, hash } from '../utils/hasher';
 import { classToPlain } from 'class-transformer';
 import jwt from 'jsonwebtoken';
@@ -19,7 +18,7 @@ class AuthController {
   // static async show(request: Request, response: Response): Promise<any> {
   //   const { id } = request.params;
   //   const userRepository = await getRepository(User);
-    
+
   //   const user = await userRepository.findOneOrFail(id);
   //   return response.json(user);
   // }
@@ -27,30 +26,29 @@ class AuthController {
   static async login(request: Request, response: Response, next: NextFunction): Promise<any> {
     try {
       const { email, password } = request.body;
-      const userRepository = await getRepository(User);
-  
-      const user = await userRepository.findOne({ email });
-  
+
+      const user = await User.findOne({ email });
+
       if (!user) {
         throw new Error("User/Password combination not found")
       }
-  
+
       const passwordValidation = compare(password, user._password);
-      
+
       if (!passwordValidation) {
         throw new Error("User/Password combination not found")
       }
-  
+
       const secret = Config.getString('JWT_SECRET');
       const expiresIn = Config.getString('JWT_EXPIRES_IN');
-  
+
       const token = jwt.sign({ id: user.id }, secret, { expiresIn });
-  
+
       return response.json({
         ...classToPlain(user, { excludePrefixes: ['_'] }),
         token
       });
-      
+
     }catch (err) {
       next(err);
     }
@@ -65,7 +63,7 @@ class AuthController {
 
       const [_, token] = header.split(' ');
       const secret = Config.getString("JWT_SECRET");
-  
+
       const result = jwt.verify(token, secret) as IVerifyObject;
       const now = Math.floor(Date.now() / 1000);
 
@@ -86,9 +84,7 @@ class AuthController {
     const { id } = request.params;
     const { oldPassword, password } = request.body;
 
-    const userRepository = await getRepository(User);
-  
-    const user = await userRepository.findOne(id);
+    const user = await User.findOne({id: Number(id)});
 
     if (!user) {
       throw new Error("User not found")
@@ -102,7 +98,7 @@ class AuthController {
 
     user._password = hash(password);
 
-    userRepository.save(user);
+    User.prototype.save(user);
 
     return response.status(200);
   }
@@ -110,9 +106,8 @@ class AuthController {
   static async forgotPassword(request: Request, response: Response): Promise<Response> {
     const { email } = request.body;
 
-    const userRepository = await getRepository(User);
-    
-    const user = await userRepository.findOne({ email });
+
+    const user = await User.findOne({ email });
 
     if (!user) {
       throw new Error('Email not found');
@@ -131,7 +126,7 @@ class AuthController {
 
     return response.status(200).send();
   }
-  
+
   static async recoverPassword(request: Request, response: Response): Promise<Response> {
     const { token, password } = request.body;
 
@@ -146,16 +141,15 @@ class AuthController {
       throw new Error('Token expired');
     }
 
-    const userRepository = await getRepository(User);
-    
-    const user = await userRepository.findOne(result.id);
+
+    const user = await User.findOne({id: Number(result.id)});
 
     if (!user) {
       throw new Error('User not found');
     }
 
     user._password = hash(password);
-    await userRepository.save(user);
+    await User.save(user);
 
     return response.status(200).send();
   }
