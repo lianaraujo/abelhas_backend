@@ -1,40 +1,41 @@
 import { Request, Response } from 'express';
 
-import Totem from '../models/Totem';
+import Totem, { ITotem } from '../models/Totem';
 
 export default {
-    async index(request: Request, response: Response) {
+    async index(req: Request, res: Response) {
         const totemsRepository = Totem;
 
         const totems = await totemsRepository.find();
 
-        return response.json(totems);
+        return res.json(totems);
     },
 
-    async show(request: Request, response: Response) {
-        const { id } = request.params;
+    async show(req: Request, res: Response) {
+        const { id } = req.params;
 
         const totemsRepository = Totem;
 
         const totem = await totemsRepository.findById(id);
 
-        return response.json(totem);
+        return res.json(totem);
     },
 
 
-    async create(request: Request, response: Response) {
+    async create(req: Request, res: Response) {
         const {
             latitude,
             longitude,
-        } = request.body;
+        } = req.body;
 
         const totem = new Totem({
             latitude,
             longitude,
         });
+        console.log(Totem)
+        console.log(totem)
+        await Totem.save(totem);
 
-        await Totem.prototype.save(totem);
-
-        return response.status(201).json(totem);
+        return res.status(201).json(totem);
     }
 };

@@ -1,11 +1,15 @@
-import * as mongoose from "mongoose";
+import { model, Schema, Document } from "mongoose";
 
-const user = new mongoose.Schema({
-    id: Number,
+export interface IUser extends Document {
+    email: string,
+    _password: string,
+    role: string,
+}
+
+const UserSchema: Schema = new Schema({
     email: String,
     _password: String,
-})
+    role: { type: String, required: true, enum: ["USER", "ADMIN"] }
+});
 
-const User = mongoose.model('User', user);
-
-export default User;
+export default model<IUser>('User', UserSchema)

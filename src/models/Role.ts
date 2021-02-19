@@ -1,10 +1,11 @@
-import * as mongoose from "mongoose";
+import { model, Schema, Document } from "mongoose";
 
-const role = new mongoose.Schema({
-    id: Number,
-    name: String,
+export interface IRole extends Document {
+    name: string,
+}
 
-})
-const Role = mongoose.model('Role', role);
+const RoleSchema: Schema = new Schema({
+    name: String
+});
 
-export default Role;
+export default model<IRole>('Role', RoleSchema)

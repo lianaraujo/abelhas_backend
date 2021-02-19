@@ -1,10 +1,13 @@
-import * as mongoose from "mongoose";
+import { model, Schema, Document } from "mongoose";
 
-const totem = new mongoose.Schema({
-    id: Number,
-    latitude: Number,
-    longitude: Number,
-})
-const Totem = mongoose.model('Totem', totem);
+export interface ITotem extends Document {
+  latitude: number;
+  longitude: number;
+}
 
-export default Totem;
+const TotemSchema: Schema = new Schema({
+  latitude: Number,
+  longitude: Number,
+});
+
+export default model<ITotem>('Totem', TotemSchema)
