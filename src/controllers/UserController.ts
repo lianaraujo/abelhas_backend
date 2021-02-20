@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import User from "../models/User";
-import Role from "../models/Role";
 import { hash } from "../utils/hasher";
 import { classToPlain } from "class-transformer";
 
@@ -31,7 +30,7 @@ class UserController {
 
     const user = await User.create({ email, _password, role });
 
-    return response.json(classToPlain(user, { excludePrefixes: ["_"] }));
+    return response.send(user);
   }
 }
 

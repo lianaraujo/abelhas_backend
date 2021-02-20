@@ -44,10 +44,7 @@ class AuthController {
 
       const token = jwt.sign({ id: user.id }, secret, { expiresIn });
 
-      return response.json({
-        ...classToPlain(user, { excludePrefixes: ['_'] }),
-        token
-      });
+      return response.json({user, token});
 
     }catch (err) {
       next(err);
@@ -57,6 +54,7 @@ class AuthController {
   static autorization(request: Request, response: Response, next: NextFunction): void {
     try {
       const header = request.headers.authorization;
+      console.log(header)
       if(!header) {
         throw new Error('No token provided')
       }
@@ -98,13 +96,11 @@ class AuthController {
 
     user._password = hash(password);
 
-    User.prototype.save(user);
-
     return response.status(200);
   }
 
-  static async forgotPassword(request: Request, response: Response): Promise<Response> {
-    const { email } = request.body;
+  static async forgotPassword(request: Request, response: Response, next: NextFunction): Promise<Response> {
+   try{ const { email } = request.body;
 
 
     const user = await User.findOne({ email });
@@ -121,10 +117,14 @@ class AuthController {
       options: {
         type: 'forgot',
         token
-      }
-    });
+
+   }});
 
     return response.status(200).send();
+        }
+        catch(error){
+        next(error)
+        }
   }
 
   static async recoverPassword(request: Request, response: Response): Promise<Response> {
@@ -142,14 +142,13 @@ class AuthController {
     }
 
 
-    const user = await User.findOne({id: Number(result.id)});
+    const user = await User.findById(result.id);
 
     if (!user) {
       throw new Error('User not found');
     }
 
     user._password = hash(password);
-    await User.save(user);
 
     return response.status(200).send();
   }

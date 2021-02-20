@@ -15,8 +15,11 @@ export default {
         const { id } = req.params;
 
         const totemsRepository = Totem;
+        console.log(Totem)
 
         const totem = await totemsRepository.findById(id);
+        console.log(totem)
+        console.log(id)
 
         return res.json(totem);
     },
@@ -28,14 +31,10 @@ export default {
             longitude,
         } = req.body;
 
-        const totem = new Totem({
+        const totem = await Totem.create({
             latitude,
             longitude,
         });
-        console.log(Totem)
-        console.log(totem)
-        await Totem.save(totem);
-
         return res.status(201).json(totem);
     }
 };
