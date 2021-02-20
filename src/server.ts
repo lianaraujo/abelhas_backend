@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import './database/connection';
+import './connection';
 import '../env/config';
 
 import cors from 'cors';
