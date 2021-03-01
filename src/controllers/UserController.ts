@@ -13,24 +13,23 @@ interface IResponse {
 }
 
 class UserController {
-  static async show(request: Request, response: Response): Promise<any> {
-    const { id } = request.params;
+  static async show(req: Request, res: Response): Promise<any> {
+    const { id } = req.params;
 
     const user = await User.findById(id);
-    console.log('sabia do caraio')
-    return response.json(classToPlain(user, { excludePrefixes: ["_"] }));
+    return res.json(classToPlain(user, { excludePrefixes: ["_"] }));
   }
 
   static async create(
-    request: Request,
-    response: Response
+    req: Request,
+    res: Response
   ): Promise<Response<IResponse>> {
-    const { email, password, role } = request.body;
+    const { email, password, role } = req.body;
     const _password = hash(password);
 
     const user = await User.create({ email, _password, role });
 
-    return response.send(user);
+    return res.send(user);
   }
 }
 
