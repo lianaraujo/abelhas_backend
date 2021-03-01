@@ -1,9 +1,14 @@
-import Totem from "../models/Totem";
+import { ITotem } from "../models/Totem";
 
 export default {
-  render(totem: Totem.) {
+  render(totem: ITotem) {
     return {
-        name: totem.
+      name: totem.name,
+      latitude: totem.latitude,
+      longitude: totem.longitude,
     };
+  },
+  renderMany(totems: Array<ITotem>) {
+    return totems.map((totem) => this.render(totem));
   },
 };

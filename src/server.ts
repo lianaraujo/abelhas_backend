@@ -1,10 +1,12 @@
 import express, { NextFunction, Request, Response } from "express";
+import "express-async-errors";
 
 import "../env/config";
 import "./connection";
 
 import cors from "cors";
 import routes from "./routes";
+import errorHandler from "./errors/handler";
 
 const app = express();
 
@@ -20,9 +22,4 @@ app.listen(3333, () => {
   console.log("🍯 Listening on port 3333 🍯");
 });
 
-app.use(
-  (error: Error, request: Request, response: Response, next: NextFunction) => {
-    const { message } = error;
-    return response.status(500).send({ message });
-  }
-);
+app.use(errorHandler);
