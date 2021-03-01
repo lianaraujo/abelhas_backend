@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 
-import Totem from '../models/Totem';
+import Totem, { ITotem } from '../models/Totem';
 
 export default {
     async index(req: Request, res: Response) {
-        const totems = await Totem.find();
+        const totemsRepository = Totem;
+
+        const totems = await totemsRepository.find();
 
         return res.json(totems);
     },
@@ -12,7 +14,12 @@ export default {
     async show(req: Request, res: Response) {
         const { id } = req.params;
 
-        const totem = await Totem.findById(id);
+        const totemsRepository = Totem;
+        console.log(Totem)
+
+        const totem = await totemsRepository.findById(id);
+        console.log(totem)
+        console.log(id)
 
         return res.json(totem);
     },
@@ -20,13 +27,11 @@ export default {
 
     async create(req: Request, res: Response) {
         const {
-            name,
             latitude,
             longitude,
         } = req.body;
 
         const totem = await Totem.create({
-            name,
             latitude,
             longitude,
         });
