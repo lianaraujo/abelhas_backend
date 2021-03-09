@@ -15,6 +15,7 @@ routes.post("/auth/recover", AuthController.recoverPassword);
 routes.get("/totems/:id", TotemController.show);
 routes.get("/totems", TotemController.index);
 routes.post("/totems", TotemController.create); //// ######
+routes.delete("/totems/:id", TotemController.delete)
 
 routes.use(AuthController.autorization); //// #############
 

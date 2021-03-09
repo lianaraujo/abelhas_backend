@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, response, Response } from "express";
 import totemView from "../views/totems_views";
 import * as Yup from "yup";
 
@@ -14,9 +14,13 @@ export default {
   async show(req: Request, res: Response) {
     const { id } = req.params;
 
-    const totem = await Totem.findById(id);
+    await Totem.findById(id)
+    .then(totem => {
+      res.send(totem);
+    })
+    // const totem = await Totem.findById(id)
 
-    return res.json(totemView.render(totem));
+    // return res.json(totemView.render(totem));
   },
 
   async create(req: Request, res: Response) {
@@ -41,4 +45,12 @@ export default {
     const totem = await Totem.create(data);
     return res.status(201).json(totem);
   },
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    
+    await Totem.findByIdAndDelete(id);
+
+    res.json({ msg: "Totem removed" })    
+  }
 };
