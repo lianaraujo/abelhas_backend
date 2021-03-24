@@ -1,8 +1,6 @@
 import express from "express";
 import "express-async-errors";
 
-import "./env/config";
-
 import 'dotenv/config';
 
 import "./connection";
