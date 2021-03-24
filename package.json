@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "engines": {
-    "node": "14.x"
+    "node": "15.x"
   },
   "scripts": {
     "start": "node dist/server.js",
@@ -12,7 +12,6 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^8.5.0",
     "class-transformer": "^0.3.1",
     "cors": "^2.8.5",
     "date-fns": "^2.16.1",
@@ -24,9 +23,11 @@
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.17",
     "nodemailer": "^6.4.17",
-    "yup": "^0.32.9"
+    "yup": "^0.29.3"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/yup": "^0.29.11",
     "@types/cors": "^2.8.9",
     "@types/express": "^4.17.8",
     "@types/mongodb": "^3.6.8",
