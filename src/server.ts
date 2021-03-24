@@ -1,8 +1,10 @@
 import express from "express";
 import "express-async-errors";
 
-import 'dotenv/config';
 import "./env/config";
+
+import 'dotenv/config';
+
 import "./connection";
 
 import cors from "cors";
