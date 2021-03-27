@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 
-import './connection';
 import '../env/config';
+import './connection';
 
 import cors from 'cors';
 import routes from './routes';

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import Totem, { ITotem } from '../models/Totem';
+import Totem from '../models/Totem';
 
 export default {
     async index(req: Request, res: Response) {

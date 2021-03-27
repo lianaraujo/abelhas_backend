@@ -7,4 +7,3 @@ const result = dotenv.config({ path: envFile });
 if (result.error) {
   throw result.error;
 }
-
