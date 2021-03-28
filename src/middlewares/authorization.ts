@@ -19,7 +19,7 @@ export function authorization(request: Request, response: Response, next: NextFu
     if(!header && !googleHeader) {
       throw new Error('No token provided')
     }
-
+    
     if(header) {
       const [_, token] = header.split(' ');
       const secret = Config.getString("JWT_SECRET");
@@ -56,9 +56,8 @@ export function authorization(request: Request, response: Response, next: NextFu
 
       verify().then((payload) => {
         next();
-      }).catch((error) => {
-        console.error(error);
-        throw new Error('Google auth error');
+      }).catch(error => {
+        next(error);
       });
     }
 

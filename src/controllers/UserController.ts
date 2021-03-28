@@ -13,6 +13,16 @@ interface IResponse {
 }
 
 class UserController {
+  static async index(request: Request, response: Response, next: NextFunction): Promise<Response | undefined> {
+    try {
+      const users = await User.find();
+
+      return response.json(users);
+    }catch(err) {
+      next(err);
+    }
+  }
+
   static async show(request: Request, response: Response, next: NextFunction): Promise<any> {
     try {
       const { id } = request.params;
