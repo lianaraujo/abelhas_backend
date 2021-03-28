@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Config from './utils/config-service';
 
 mongoose.connect(Config.getString('MONGODB_URI'), {useNewUrlParser: true, useUnifiedTopology: true});
 
