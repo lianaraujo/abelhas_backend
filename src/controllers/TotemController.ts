@@ -1,8 +1,8 @@
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import totemView from "../views/totems_views";
 import * as Yup from "yup";
 
-import Totem from "../models/Totem";
+import Totem from '../models/Totem';
 
 export default {
   async index(req: Request, res: Response) {

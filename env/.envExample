@@ -1,0 +1,4 @@
+JWT_SECRET=this_is_a_secret
+JWT_EXPIRES_IN=1d2h30m
+MONGODB_CONN=server://dbuser:password@restofstring.net
+GOOGLE_CLIENT_ID=thisIsAnClientIdFromGoogle@ADASEW!2412.google.com
