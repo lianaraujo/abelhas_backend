@@ -1,10 +1,10 @@
 import * as nodemailer from 'nodemailer';
-import Mail from 'nodemailer/lib/mailer';
-import User from '../models/User';
+// import Mail from 'nodemailer/lib/mailer';
+import { IUser } from '../models/User';
 import TemplateService from './template-service';
 
 export interface SendMailData {
-  user: User,
+  user: IUser,
   options: {
     type: 'forgot' | 'recover' | 'register';
     token?: string;
@@ -40,8 +40,8 @@ class EmailService {
         },
       });
 
-      TemplateService.getMailData({ 
-        user, 
+      TemplateService.getMailData({
+        user,
         options
       }).then(mailData => {
         transporter.sendMail(mailData).then(info => {
@@ -52,8 +52,8 @@ class EmailService {
 
     });
 
-    
-  }  
+
+  }
 }
 
 export default EmailService;
