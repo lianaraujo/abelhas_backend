@@ -1,22 +1,25 @@
-import { Router } from "express";
-import AuthController from "./controllers/AuthController";
-import TotemController from "./controllers/TotemController";
-import UserController from "./controllers/UserController";
+import { Router } from 'express';
+import AuthController from './controllers/AuthController';
+import TotemController from './controllers/TotemController';
+import UserController from './controllers/UserController';
+import { authorization } from './middlewares/authorization';
 
 const routes = Router();
 
-routes.get("/users/:id", UserController.show);
-routes.post("/users", UserController.create); ///#################
+routes.post('/auth/login', AuthController.login);
+routes.post('/auth/forgot', AuthController.forgotPassword);
+routes.post('/auth/recover', AuthController.recoverPassword);
+routes.post('/auth/register', AuthController.register);
 
-routes.post("/auth/login", AuthController.login); //##################
-routes.post("/auth/forgot", AuthController.forgotPassword);
-routes.post("/auth/recover", AuthController.recoverPassword);
+routes.get('/totems', TotemController.index);
+routes.get('/totems/:id', TotemController.show);
 
-routes.get("/totems/:id", TotemController.show);
-routes.get("/totems", TotemController.index);
-routes.post("/totems", TotemController.create); //// ######
+routes.use(authorization);
+
+routes.post('/totems', TotemController.create);
 routes.delete("/totems/:id", TotemController.delete)
-
-routes.use(AuthController.autorization); //// #############
+routes.get('/users', UserController.index);
+routes.get('/users/:id', UserController.show);
+routes.post('/users', UserController.create);
 
 export default routes;
