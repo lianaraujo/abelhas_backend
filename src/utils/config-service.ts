@@ -1,11 +1,11 @@
 class Config {
   static getString(name: string): string {
     const response = process.env[name];
-
+    console.log(process.env)
     if (!response) {
       throw new Error('[Config] data not found');
     }
-    
+
     return response;
   }
 
@@ -15,7 +15,7 @@ class Config {
     if (!response) {
       throw new Error('[Config] data not found');
     }
-    
+
     return Number(response);
   }
 
