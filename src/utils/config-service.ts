@@ -1,5 +1,6 @@
 class Config {
   static getString(name: string): string {
+    console.log(name)
     const response = process.env[name];
     console.log(process.env)
     if (!response) {
