@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "dev:debug": "yarn dev",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
@@ -15,12 +15,13 @@
     "date-fns": "^2.16.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "handlebars": "^4.7.6",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.17",
     "nodemailer": "^6.4.17",
-    "sqlite3": "^5.0.0"
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@types/cors": "^2.8.9",
