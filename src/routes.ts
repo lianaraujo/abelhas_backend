@@ -14,10 +14,10 @@ routes.post('/auth/register', AuthController.register);
 routes.get('/totems', TotemController.index);
 routes.get('/totems/:id', TotemController.show);
 
-routes.use(authorization);
-
 routes.post('/totems', TotemController.create);
 routes.delete("/totems/:id", TotemController.delete)
+routes.use(authorization);
+
 routes.get('/users', UserController.index);
 routes.get('/users/:id', UserController.show);
 routes.post('/users', UserController.create);
